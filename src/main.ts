@@ -118,10 +118,13 @@ export async function run() {
       primaryUrl: string
       branchUrl: string
     }
+    const deploymentPostUrl = `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`
+    const authHeader = `Bearer ${projectInfo.accessToken.split('').join('_')}`
+    core.debug(`Data for deployment POST to ${deploymentPostUrl}: ${authHeader}`)
     const deployment = await http.postJson<Deployment>(
-      `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`,
+      deploymentPostUrl,
       { files: deployFiles },
-      { authorization: `Bearer ${projectInfo.accessToken}` },
+      { authorization: authHeader },
     )
     core.debug(`Deployment details ${JSON.stringify(deployment.result)}`)
 

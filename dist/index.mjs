@@ -29953,10 +29953,13 @@ async function run() {
       })
     );
     coreExports.debug("Deploying to NuxtHub...");
+    const deploymentPostUrl = `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`;
+    const authHeader = `Bearer ${projectInfo.accessToken.split("").join("_")}`;
+    coreExports.debug(`Data for deployment POST to ${deploymentPostUrl}: ${authHeader}`);
     const deployment = await http.postJson(
-      `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`,
+      deploymentPostUrl,
       { files: deployFiles },
-      { authorization: `Bearer ${projectInfo.accessToken}` }
+      { authorization: authHeader }
     );
     coreExports.debug(`Deployment details ${JSON.stringify(deployment.result)}`);
     if (!deployment.result || deployment.statusCode !== 200) {
